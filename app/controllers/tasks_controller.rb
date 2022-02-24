@@ -3,8 +3,8 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.order(created_at: :asc)
-    @task = Task.new
+    @tasks = current_user.tasks.order(created_at: :asc)
+    @task = current_user.tasks.new
   end
 
   # GET /tasks/1 or /tasks/1.json
