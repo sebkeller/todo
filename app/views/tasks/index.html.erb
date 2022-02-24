@@ -8,7 +8,7 @@
     <%= link_to 'New task', new_task_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="tasks" class="min-w-full" data-controller="checkbox">
+  <div id="tasks" class="min-w-full" data-controller="checkbox drag" data-drag-url="/tasks/:id/move">
     <%= render @tasks %>
   </div>
 </div>

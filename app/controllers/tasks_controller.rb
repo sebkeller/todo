@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update destroy move ]
 
   # GET /tasks or /tasks.json
   def index
@@ -24,7 +24,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     respond_to do |format|
       if @task.save
@@ -56,6 +56,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def move
+    @task.insert_at(params[:position].to_i)
+    head :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -64,6 +69,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :description, :completed, :due_date)
+      params.require(:task).permit(:user, :title, :description, :completed, :due_date)
     end
 end
